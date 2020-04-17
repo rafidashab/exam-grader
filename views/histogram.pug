@@ -1,0 +1,40 @@
+html
+  head
+    title= title
+    style
+      include style.css
+    script(src="https://code.jquery.com/jquery-3.5.0.min.js")
+    script
+        include histogram.js
+  body
+    h1= message
+    p Choose Grade Cut off
+    div.wrapper
+        div.left
+            form(class='generate_histogram')
+            label A + : 
+            input(type='range', name='1', value='5', required)
+            <input type="text" id="textInput" value="">
+            label A :
+            input(type='text', name='2', value='5', required)
+            label A- : 
+            input(type='text', name='3', value='5', required)
+            label B+ : 
+            input(type='text', name='4', value='5', required)
+            label B : 
+            input(type='text', name='5', value='5', required)
+            label B- : 
+            input(type='text', name='6', value='5', required)
+            label C+ : 
+            input(type='text', name='7', value='5', required)
+            label C : 
+            input(type='text', name='8', value='5', required)
+            label C- : 
+            input(type='text', name='9', value='5', required)
+            label D+ : 
+            input(type='text', name='10', value='5', required)
+            label D : 
+            input(type='text', name='11', value='5', required)
+        div.right 
+            | Generated Histogram
+            

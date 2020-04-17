@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> <%= title %> </title>
+    <script
+        src="https://code.jquery.com/jquery-3.5.0.min.js"
+        integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+        crossorigin="anonymous">
+    </script>
+    <style> 
+        input[type=text] {
+            width: 20%;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        input[type=range] {
+            width: 100%;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+        display: flex;
+        }
+
+        .left {
+        flex: 0 0 50%;
+        }
+
+        .right {
+        flex: 1;
+        }
+
+        .button {
+        background-color: rgb(80, 93, 205);
+        border: none;
+        color: white;
+        padding: 5px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        }
+
+        table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        }
+
+        tr:nth-child(even){background-color: #f2f2f2;}
+
+        tr:hover {background-color: #ddd;}
+
+        th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+        }
+
+        .alert {
+        padding: 20px;
+        display: none;
+        background-color: #f44336;
+        color: white;
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio:0) {
+            input[type='range'] {
+            overflow: hidden;
+            width: 100%;
+            -webkit-appearance: none;
+            background-color: #9a905d;
+            }
+            
+            input[type='range']::-webkit-slider-runnable-track {
+            height: 10px;
+            -webkit-appearance: none;
+            color: #13bba4;
+            margin-top: -1px;
+            }
+            
+            input[type='range']::-webkit-slider-thumb {
+            width: 10px;
+            -webkit-appearance: none;
+            height: 10px;
+            cursor: ew-resize;
+            background: #434343;
+            box-shadow: -80px 0 0 80px #43e5f7;
+            }
+
+        }
+
+    </style>
+    
+</head>
+<main>
+    <div class="jumbotron">
+        <h1> <%= message %> </h1>
+    </div>
+    <p> Choose Grade Cut off </p>
+    <div id="error" class=alert> Maximum Cut off cannot be greater than 100 </div>
+    Cut off  : <div style="display:inline" id="count">  </div> / 100
+    
+    <div class="wrapper">
+        <div class="left">
+        <form id='param'>
+            <label> A + : </label>
+            <input type='text' id=val_1 value=0 disabled>
+            <input type='range' name='1' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 1)">
+            
+            <label> A  : </label>
+            <input type='text' id=val_2 value=0 disabled>
+            <input type='range' name='2' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 2)">
+
+            <label> A-  : </label>
+            <input type='text' id=val_3 value=0 disabled>
+            <input type='range' name='3' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 3)">
+
+            <label> B+  : </label>
+            <input type='text' id=val_4 value=0 disabled>
+            <input type='range' name='4' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 4)">
+
+            <label> B  : </label>
+            <input type='text' id=val_5 value=0 disabled>
+            <input type='range' name='5' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 5)">
+
+            <label> B-  : </label>
+            <input type='text' id=val_6 value=0 disabled>
+            <input type='range' name='6' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 6)">
+
+            <label> C+  : </label>
+            <input type='text' id=val_7 value=0 disabled>
+            <input type='range' name='7' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 7)">
+
+            <label> C  : </label>
+            <input type='text' id=val_8 value=0 disabled>
+            <input type='range' name='8' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 8)">
+
+            <label> C-  : </label>
+            <input type='text' id=val_9 value=0 disabled>
+            <input type='range' name='9' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 9)">
+
+            <label> D  : </label>
+            <input type='text' id=val_10 value=0 disabled>
+            <input type='range' name='10' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 10)">
+
+            <label> F  : </label>
+            <input type='text' id=val_11 value=0 disabled>
+            <input type='range' name='11' value='0' min=0 max=100 required onchange="updateTextInput(this.value, 11)">
+
+        </form> 
+        <a href='/logout'> Logout</a>
+        </div>
+        <div class="right">
+            "Histogram"
+            <div style="float:right">
+                <a class=button id='print'> Show Result </a>
+            </div>
+            <div style="padding: 10%;" id="bar-horzontal">
+            </div>
+            
+            <div div style="padding: 10%;" id='show_res'> 
+
+            </div>
+        </div>
+    </div>
+    <div id="data" style="display: none">
+        <%= JSON.stringify(marks); %>
+    </div>
+    <div id="result" style="display: none">
+        <%= JSON.stringify(result); %>
+    </div>
+</main>
+
+<footer>
+    <script>
+
+        var low_bound = [];
+        var results = [];
+        var marks = [];
+        var range = [];
+        $(document).ready(function(){
+            results = JSON.parse($("#result").html());
+            marks = JSON.parse($('#data').html());
+            $("#print").click(function() {
+                $.ajax({
+                    method: 'post',
+                    url: '/print',
+                    data:  {low_bound: low_bound, results: results, marks: marks, range: range},
+                    success: function(data) {
+                        console.log(data);
+                        $('#show_res').html(data);
+                    }
+                });
+            });
+
+        });
+
+        function updateTextInput(val, index) {
+          document.getElementById('val_'+index).value=val;
+          var total = 0;
+          var error;
+          $("#param input[type=range]").each(function () {
+
+              range[this.name - 1] = this.value;
+              total += parseInt(this.value);
+              $("#count").html(total);
+              if (total > 100) {
+                 $("#error").show();
+                 error = true;
+              }
+              else {
+                $("#error").hide();
+                error = false;
+              }
+          })
+
+            if (!error) {
+                generateHistogram(range);
+            }
+            else {
+                $("#bar-horzontal").html("");
+                $("#show_res").html("");
+            }
+        }
+
+        function randDarkColor() {
+            var lum = -0.25;
+            var hex = String('#' + Math.random().toString(16).slice(2, 8).toUpperCase()).replace(/[^0-9a-f]/gi, '');
+            if (hex.length < 6) {
+                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+            }
+            var rgb = "#", c, i;
+            for (i = 0; i < 3; i++) {
+                c = parseInt(hex.substr(i * 2, 2), 16);
+                c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+                rgb += ("00" + c).substr(c.length);
+            }
+            return rgb;
+        }
+
+        function generateHistogram(range) {
+
+           $("#bar-horzontal").html("");
+
+           var data = JSON.parse($('#data').html());
+           console.log(data);
+           console.log(range);
+           count = [];
+           let total = 100;
+           range.map( (val, index) => {
+
+                if (total-val >= 0) {
+                    low_bound[index] = total - val;
+                } else {
+                    low_bound[index] = 0
+                }
+                count[index] = data.filter(val => val > low_bound[index] && val <=total).length
+                total = low_bound[index];
+           })
+
+           console.log(low_bound);
+           console.log(count);
+
+
+           grades = [ 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D', 'F'];
+
+           horizontal = [];
+           for (var i = 0; i < grades.length; i++) {
+                horizontal.push([ grades[i], parseInt((count[i]/data.length) * 100)])
+           }
+
+            var container = document.getElementById("bar-horzontal");
+            for (var hor of horizontal) {
+                var bar = document.createElement("div");
+                bar.innerHTML = hor[0];
+                bar.style = "background: " + randDarkColor() + "; width: " + hor[1] + "%;";
+                container.appendChild(bar);
+            }
+        }
+
+    </script>
+</footer>

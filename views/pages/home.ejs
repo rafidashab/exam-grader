@@ -1,0 +1,22 @@
+<!-- views/pages/home.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> <%= title %> </title>
+    
+</head>
+<main>
+    <div align="center">
+        <h1> <%= message %> </h1>
+        <form method='post' action='/upload' enctype='multipart/form-data'> 
+            <input type='file' name='upload_csv'>
+            <input type='submit' name='submit_csv', value='Upload CSV file'> 
+        </form>
+        <br>
+        <a href='/logout'> Logout</a>
+    </div>
+</main>
+
+</body>
+</html>
