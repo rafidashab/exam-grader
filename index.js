@@ -170,5 +170,5 @@ app.post('/print', (req, res) => {
 
 })
 
-port = 12345;
+port = 8080;
 app.listen(port, () => console.log(`Exam app listening at http://localhost:${port}`))
